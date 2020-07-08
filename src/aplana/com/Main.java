@@ -1,8 +1,11 @@
 package aplana.com;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class Main{
@@ -10,12 +13,21 @@ public class Main{
     public static void main(String[] args) {
         ArrayList<String> words = new ArrayList<>();
 
-        try(FileInputStream fin=new FileInputStream("text.txt")) {
+        Scanner input = new Scanner(System.in);
 
-            words.add("first stroke");
+        //region Задача со звёздочкой
+        // (похоже, что я не так понял суть задания(, просто программа работает как с абсолютным так и с относительным)
+        System.out.print("Input ur filepath: ");
+        String given_path = input.nextLine();
+        Path path = Paths.get(given_path);
+        //endregion
+
+
+        System.out.println();
+        //region Считывание файла по введённому пути
+        try (FileInputStream fin = new FileInputStream(path.normalize().toString())){
             String s = "";
             int i = -1;
-            boolean flag = false;
             while( (i = fin.read()) != -1 ){
                 try {
                     if (!Character.isAlphabetic((char) i) || (char) i == '\r' || (char) i == '\n') {
@@ -42,16 +54,21 @@ public class Main{
             System.out.println("Something gone wrong w file");
             System.exit(0);
         }
+        //endregion
 
         System.out.println("Given words:");
         System.out.println(words);
         System.out.println();
 
+        //region вывод отсортированного списка слов
         Collections.sort(words, String.CASE_INSENSITIVE_ORDER);
         System.out.println("Sorted by alphabet words:");
         System.out.println(words);
         System.out.println();
+        //endregion
 
+
+        //region самые повторяющиеся слова
         NavigableMap <String, Integer> map_of_words = new TreeMap<>();
         int max = -1;
         for (var word : words){
@@ -74,6 +91,7 @@ public class Main{
                 }
             }
         }
+        //endregion
 
         //Sorry for bad en
     }
