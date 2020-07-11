@@ -72,11 +72,12 @@ public class Main{
         NavigableMap <String, Integer> map_of_words = new TreeMap<>();
         int max = -1;
         for (var word : words){
-            if (!map_of_words.containsKey(word))
-                map_of_words.put(word, 1);
+            String lower_word = word.toLowerCase();
+            if (!map_of_words.containsKey(lower_word))
+                map_of_words.put(lower_word, 1);
             else
-                map_of_words.put(word, map_of_words.get(word) + 1);
-            if (max < map_of_words.get(word)) max = map_of_words.get(word);
+                map_of_words.put(lower_word, map_of_words.get(lower_word) + 1);
+            if (max < map_of_words.get(lower_word)) max = map_of_words.get(lower_word);
         }
         System.out.println("amount of max repeats of words: " + max);
 
